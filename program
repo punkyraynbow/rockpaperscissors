@@ -1,0 +1,168 @@
+import java.util.Scanner;                       //import keyboard
+import java.lang.String;                        //import string
+import java.util.Random;                        //import random
+
+public class RockPaperScissors                  //class header
+{
+	public static void main(String[] args)       //main header
+	{
+		Scanner scan = new Scanner(System.in);	   // The scanner allows user input
+      
+     		Random rand = new Random();	         // The random number generator allows computer to throw a random hand				
+				
+		// Initialize constants (using final and capital letters)
+		final String ROCK = "rock";               //rock
+		final String PAPER = "paper";             //paper
+		final String SCISSORS = "scissors" ;      //scissrs
+		final String QUIT = "q";                  //quit option
+		int wins = 0, losses = 0, ties = 0, counter = 0;
+     
+      // Tie message
+		final String TIE_MSG = "Tie! Please play again to determine winner. ";
+		
+      //Set strings for display
+		String computerHand = "";
+		String playerHand = "";
+		String winnerMsg = "";
+				
+		// This is the main game loop!
+		      while (true) 
+		{
+			System.out.println("Choose rock, paper, or scissors. Or press q to quit");
+			
+			// Accept initial user input
+			boolean inputValid = true;
+			playerHand = scan.next();
+			
+			// Check validity of input
+			if (  !(   playerHand.equals(ROCK) 
+					|| playerHand.equals(PAPER) 
+					|| playerHand.equals(SCISSORS) 
+					|| playerHand.equals(QUIT)     ))
+			{
+				inputValid = false;
+			}
+			
+			// If input is valid, get new user input
+			while (!inputValid) {
+				
+				System.out.println("Invalid input!! (Input \"rock\", \"paper\"," + 
+								   "\"scissors\", or \"q\"");
+
+				playerHand = scan.next();
+				
+				// Check new input is valid
+				if (       playerHand.equals(ROCK) 
+						|| playerHand.equals(PAPER) 
+						|| playerHand.equals(SCISSORS) 
+						|| playerHand.equals(QUIT)		)
+				{
+					inputValid = true;
+				}
+			}
+				
+	        if(playerHand.equals("q")) //if user prints "q", then quit program
+            {System.out.println("Your total score is " +counter);
+            System.out.println("Total wins was " + wins);
+            System.out.println("Total losses of " + losses);
+            
+            System.out.println("With " + ties +
+            "  ties.");
+            if (counter>9)
+            { 
+               System.out.println("Congratulations you win!!!!");
+                           }
+            if (counter<-9)
+               {
+               System.out.println("WOW YOU SUCK AT THIS!");
+               }
+             System.exit(0); 
+           
+            }
+
+			// Randomly generate computer's hand
+			int tempHand = rand.nextInt(3);
+			switch (tempHand) 
+			{
+			case 0:
+				computerHand = ROCK;
+				break;
+			case 1:
+				computerHand = PAPER;
+				break;
+			case 2:
+				computerHand = SCISSORS;
+				break;
+			}
+			
+		
+         
+         // Check for tie
+			
+              
+         if (playerHand.equals(computerHand))
+			{
+				System.out.println( TIE_MSG ) ;
+            ties++;
+			}
+			else
+			{
+				// If not a tie, compute the winner
+            
+            //case-break computer hand vs player if-else if hand
+				switch (computerHand)
+				{
+				case ROCK: //computer has rock
+					if (playerHand.equals(PAPER)) //player has paper
+					{
+						System.out.println("Computer chose rock. Paper wraps rock. You win.  ");//winning message
+						counter++;
+                  wins++;
+					}
+					else if (playerHand.equals(SCISSORS))
+					{
+						System.out.println("Computer chose rock. The rock smashes the scissors. You lose.  "); // losing message :(
+						counter--;
+                  losses++;
+					}
+					break;
+					
+				case PAPER: //computer has paper
+					if (playerHand.equals(ROCK)) //player has rock
+					{
+						System.out.println("Computer chose paper. Paper wraps rock. You lose. "); //losing message 
+						counter--;
+                  losses++;
+					}
+					else if (playerHand.equals(SCISSORS)) //player has scissors
+					{
+						System.out.println("Computer chose paper. Scissors cut paper. You win. "); //winning message YAY
+					counter++;
+               wins++;
+					}
+					break;
+					
+				case SCISSORS: //computer has scissors
+					if (playerHand.equals(ROCK)) //player has rock
+					{
+						System.out.println("Computer chose scissors. The rock smashes the scissor. You win. "); //winning message
+                  counter++; //winning means gaining points
+                  wins++;
+					}
+					else if (playerHand.equals(PAPER)) //player has paper
+					{
+						System.out.println("Computer chose scissors. Scissors cut paper. You lose. "); //losing message
+						counter--; //losing means losing points
+                  losses++;
+					}
+					break;
+              
+				}
+            System.out.print("Current score is " + counter);
+            System.out.print(". ");
+			}
+					
+		}
+		
+	}
+}
